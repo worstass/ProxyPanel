@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  mysql:
+    image: mariadb:10.5
+    environment:
+      MYSQL_DATABASE: proxypanel
+      MYSQL_ROOT_PASSWORD: 123456
+#    volumes:
+#      - mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  adminer:
+    image: adminer:4
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+  redis:
+    image: ubuntu/redis:edge
+    restart: unless-stopped
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+      REDIS_ALLOW_REMOTE_CONNECTIONS: "yes"
+    ports:
+      - "6379:6379"
+
+#volumes:
+#  mysql-data:
+#  sftp_data:
