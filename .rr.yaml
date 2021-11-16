@@ -1,8 +1,33 @@
 server:
-  command: "php psr-worker.php"
-  relay: "tcp://localhost:7000"
+#  command: "php psr-worker1.php"
+#  relay: "tcp://localhost:7000"
+  command: "php ./vendor/bin/rr-worker start --relay-dsn unix:///var/run/rr/rr-relay.sock"
+  relay: "unix:///var/run/rr/rr-relay.sock"
 
 http:
-  address: 0.0.0.0:8080
+  address: 0.0.0.0:9090
   pool:
     num_workers: 4
+#
+#grpc:
+#  listen: "tcp://:9001"
+#  proto: "service.proto"
+#  tls:
+#    key:  "server.key"
+#    cert: "server.crt"
+#  workers:
+#    command: "php worker.php"
+#    pool:
+#      numWorkers: 4
+#
+#metrics:
+#  address: localhost:2112
+#
+#limit:
+#  interval: 1
+#  services:
+#    grpc:
+#      maxMemory: 100
+#      TTL: 0
+#      idleTTL: 0
+#      execTTL: 60

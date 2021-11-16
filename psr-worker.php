@@ -19,7 +19,6 @@ while ($req = $psr7->acceptRequest()) {
             $parsedBody = json_decode($body, true);
             $req = $req->withParsedBody($parsedBody);
         }
-
         $symfonyReq = $httpFoundationFactory->createRequest($req);
         $request = Illuminate\Http\Request::createFromBase($symfonyReq);
         $response = $kernel->handle($request);
