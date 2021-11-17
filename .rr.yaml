@@ -1,14 +1,21 @@
 server:
-#  command: "php psr-worker1.php"
-#  relay: "tcp://localhost:7000"
-  command: "php ./vendor/bin/rr-worker start --relay-dsn unix:///var/run/rr/rr-relay.sock"
-  relay: "unix:///var/run/rr/rr-relay.sock"
+  relay: "tcp://127.0.0.1:7000"
+  command: "php ./vendor/bin/rr-worker start --relay-dsn tcp://127.0.0.1:7000"
 
 http:
   address: 0.0.0.0:9090
+  middleware: [ "headers", "gzip" ]
   pool:
-    num_workers: 4
-#
+    max_jobs: 64 # feel free to change this
+    supervisor:
+      exec_ttl: 60s
+  headers:
+    response:
+      X-Powered-By: "RoadRunner"
+  static:
+    dir: "public"
+    forbid: [ ".php" ]
+
 #grpc:
 #  listen: "tcp://:9001"
 #  proto: "service.proto"
