@@ -25,14 +25,14 @@ class WebApi
             return $this->returnData('Your key is null!');
         }
 
-        $nodeAuth = $node->auth ?? null;
-        if (! isset($nodeAuth) || $key !== $nodeAuth->key) {// key不存在/不匹配
-            return $this->returnData('Token is invalid!');
-        }
-
-        if (abs($time - time()) >= 300) {// 时差超过5分钟
-            return $this->returnData('Please resynchronize the server time!');
-        }
+//        $nodeAuth = $node->auth ?? null;
+//        if (! isset($nodeAuth) || $key !== $nodeAuth->key) {// key不存在/不匹配
+//            return $this->returnData('Token is invalid!');
+//        }
+//
+//        if (abs($time - time()) >= 300) {// 时差超过5分钟
+//            return $this->returnData('Please resynchronize the server time!');
+//        }
 
         return $next($request);
     }

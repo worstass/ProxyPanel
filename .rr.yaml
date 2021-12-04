@@ -1,40 +1,44 @@
 server:
-  relay: "tcp://127.0.0.1:7000"
-  command: "php ./vendor/bin/rr-worker start --relay-dsn tcp://127.0.0.1:7000"
+#  relay: "tcp://127.0.0.1:7000"
+#  command: "php ./vendor/bin/rr-worker start --relay-dsn tcp://127.0.0.1:7000"
+  command: "php ./vendor/bin/rr-worker start"
+#  relay: "pipes"
+#  relay_timeout: "20s"
 
 http:
   address: 0.0.0.0:9090
   middleware: [ "headers", "gzip" ]
   pool:
-    max_jobs: 64 # feel free to change this
-    supervisor:
-      exec_ttl: 60s
+    numWorkers: 4
   headers:
     response:
       X-Powered-By: "RoadRunner"
   static:
     dir: "public"
     forbid: [ ".php" ]
+#
+#rpc:
+#  listen: "tcp://127.0.0.1:6001"
 
-#grpc:
-#  listen: "tcp://:9001"
-#  proto: "service.proto"
-#  tls:
-#    key:  "server.key"
-#    cert: "server.crt"
-#  workers:
-#    command: "php worker.php"
-#    pool:
-#      numWorkers: 4
-#
-#metrics:
-#  address: localhost:2112
-#
-#limit:
-#  interval: 1
-#  services:
-#    grpc:
-#      maxMemory: 100
-#      TTL: 0
-#      idleTTL: 0
-#      execTTL: 60
+grpc:
+  listen: "tcp://:9001"
+  proto: "service.proto"
+  tls:
+    key:  "server.key"
+    cert: "server.crt"
+  workers:
+    command: "php grpc-worker.php"
+    pool:
+      numWorkers: 4
+
+metrics:
+  address: localhost:2112
+
+limit:
+  interval: 1
+  services:
+    grpc:
+      maxMemory: 100
+      TTL: 0
+      idleTTL: 0
+      execTTL: 60

@@ -56,6 +56,7 @@ Route::group(['namespace' => 'Api\WebApi', 'middleware' => 'webApi'], function (
         Route::get('nodeRule/{node}', 'BaseController@getNodeRule'); // 获取节点的审计规则
         Route::post('trigger/{node}', 'BaseController@addRuleLog'); // 上报用户触发的审计规则记录
         Route::post('certificate/{node}', 'V2RayController@addCertificate'); // 上报节点伪装域名证书信息
+        Route::post('authUser', 'AuthUserController@authenticate');
     });
 
     // Trojan后端WEBAPI V1版
